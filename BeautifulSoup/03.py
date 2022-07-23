@@ -20,3 +20,21 @@ soup = BeautifulSoup(res.text, 'lxml')
 items = soup.find_all('li', attrs={'class':re.compile("^search-product")})
 print(items[0].find('div', attrs={'class':'name'}))
 
+# 제품명, 가격, 평점, 평점 수 출력
+for item in items:
+    name = item.find('div', attrs={'class' : 'name'}).get_text()
+    price = item.find('strong', attrs={'class' : 'price-value'}).get_text()
+    rate = item.find('em', attrs={'class' : 'rating'})
+    rate_cnt = item.find('span', attrs={'class' : 'rating-total-count'})
+
+    if rate:
+        rate = rate.get_text()
+    else:
+        rate = '평점 없음'
+
+    if rate_cnt:
+        rate_cnt = rate_cnt.get_text()
+    else:
+        rate_cnt = '평점 수 없음'
+    
+    print(name, price, rate, rate_cnt)
