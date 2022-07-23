@@ -30,11 +30,25 @@ for item in items:
     if rate:
         rate = rate.get_text()
     else:
-        rate = '평점 없음'
+        print('평점 없는 상품 제외')
+        continue
 
     if rate_cnt:
         rate_cnt = rate_cnt.get_text()
     else:
-        rate_cnt = '평점 수 없음'
+        print('평점 수 없는 상품 제외')
+        continue
+
+    # 삼성 제품 제외
+    if '삼성' in name:
+        print('삼성 상품 제외합니다')
+        continue
+
+    # 리뷰가 100개 이상, 평점 4.5이상만 조회
+    rate_cnt = rate_cnt[1:-1]
+    if float(rate) >= 4.5 and int(rate_cnt) >= 100:
+        print(name, price, rate, rate_cnt)
+    else:
+        print('리뷰가 100건보다 적거나 평점이 4.5 미만입니다')
+
     
-    print(name, price, rate, rate_cnt)
