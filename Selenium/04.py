@@ -4,6 +4,13 @@ from bs4 import BeautifulSoup
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
+# 만약 headless chrome으로 동작을 원하면 다음 코드를 추가한다
+options.headless = True
+options.add_argument('window-size=1920x1080')
+#options.add_argument('user-agent=') 를 붙어주어야지 headless chrome의 차단을 막을 수 있다
+############################################################
+
 browser = webdriver.Chrome(options=options)
 browser.maximize_window()
 
