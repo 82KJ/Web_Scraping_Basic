@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 def create_soup(url):
     headers = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
@@ -47,7 +48,22 @@ def scrape_it_headline():
         url = headlines[i].a['href']
         print(f'{i+1}. {headline} [주소 : {url}]')
 
+def scrape_english():
+    print('\n오늘의 영어 회화')
+    soup = create_soup('https://www.hackers.co.kr/?c=s_eng/eng_contents/I_others_english&keywd=haceng_submain_lnb_eng_I_others_english&logger_kw=haceng_submain_lnb_eng_I_others_english')
+    
+    sentences = soup.find_all('div', attrs ={'id' : re.compile('^conv_kor_t')})
+    print('(영어 지문)')
+    for sentence in sentences[len(sentences)//2:]:
+        print(sentence.get_text().strip())
+
+    print('\n(한국어 지문)')
+    for sentence in sentences[:len(sentences)//2]:
+        print(sentence.get_text().strip())
+    
+
 if __name__ == '__main__':
     scrape_weather()
     scrape_headline()
     scrape_it_headline()
+    scrape_english()
