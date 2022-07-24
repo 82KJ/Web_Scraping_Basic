@@ -37,6 +37,17 @@ def scrape_headline():
         url = headlines[i].a['href']
         print(f'{i+1}. {headline} [주소 : {url}]')
 
+def scrape_it_headline():
+    print('\n오늘의 IT 헤드라인 뉴스')
+    soup = create_soup('https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=105')
+
+    headlines = soup.find_all('div', attrs = {'class' : 'cluster_text'})
+    for i in range(3):
+        headline = headlines[i].a.get_text()
+        url = headlines[i].a['href']
+        print(f'{i+1}. {headline} [주소 : {url}]')
+
 if __name__ == '__main__':
     scrape_weather()
     scrape_headline()
+    scrape_it_headline()
